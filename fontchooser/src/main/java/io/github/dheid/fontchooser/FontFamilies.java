@@ -21,7 +21,11 @@ public class FontFamilies implements Iterable<FontFamily> {
 
     public void add(Font font) {
         String family = font.getFamily();
-        FontFamily fontFamily = families.computeIfAbsent(family, FontFamily::new);
+        FontFamily fontFamily = families.get(family);
+        if(fontFamily == null) {
+            fontFamily = new FontFamily(family);
+            families.put(family, fontFamily);
+        }
         fontFamily.add(font);
     }
 

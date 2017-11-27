@@ -22,10 +22,19 @@ public class SearchListener extends KeyAdapter {
     public void keyTyped(KeyEvent e) {
         JTextField searchField = (JTextField) e.getSource();
         String searchString = searchField.getText().toLowerCase(Locale.ENGLISH);
-        Optional<String> first = fontFamilyNames.stream()
-            .filter(family -> family.toLowerCase(Locale.ENGLISH).contains(searchString))
-            .findFirst();
-        first.ifPresent(familyPane::setSelectedFamily);
+        String first = getFirstFontFamilyName(searchString);
+        if(first != null) {
+            familyPane.setSelectedFamily(first);
+        }
+    }
+
+    private String getFirstFontFamilyName(String searchString) {
+        for (String fontFamilyName : fontFamilyNames)  {
+            if(fontFamilyName.toLowerCase(Locale.ENGLISH).contains(searchString)) {
+                return fontFamilyName;
+            }
+        }
+        return null;
     }
 
     public void addFamilyName(String name) {

@@ -22,7 +22,7 @@ public class ShowDialogExample implements Runnable {
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(600, 300);
 
-        JTextArea textArea = new JTextArea("This text will be formatted according to the selected font. " +
+        final JTextArea textArea = new JTextArea("This text will be formatted according to the selected font. " +
             "Double click to change font.");
         textArea.setLineWrap(true);
 

@@ -2,8 +2,9 @@ import io.github.dheid.fontchooser.FontChooser;
 import io.github.dheid.fontchooser.model.FontSelectionModel;
 
 import javax.swing.*;
-import javax.swing.plaf.metal.MetalLookAndFeel;
-import java.awt.BorderLayout;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
 
 public class PanelExample implements Runnable {
@@ -21,9 +22,12 @@ public class PanelExample implements Runnable {
 
         FontChooser fontChooser = new FontChooser();
         fontChooser.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        fontChooser.addChangeListener(event -> {
-            FontSelectionModel model = (FontSelectionModel) event.getSource();
-            selection.setText(model.getSelectedFont().toString());
+        fontChooser.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent event) {
+                FontSelectionModel model = (FontSelectionModel) event.getSource();
+                selection.setText(model.getSelectedFont().toString());
+            }
         });
 
         JFrame frame = new JFrame("Select Font");

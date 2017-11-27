@@ -9,6 +9,9 @@ import javax.swing.JSpinner;
 import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -57,27 +60,33 @@ public class SizePane extends JPanel {
         int spinnerHeight = (int) sizeSpinner.getPreferredSize().getHeight();
         sizeSpinner.setPreferredSize(new Dimension(60, spinnerHeight));
         sizeSpinner.setModel(new SpinnerNumberModel(12, 6, 128, 1));
-        sizeSpinner.addChangeListener(event -> {
+        sizeSpinner.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent event) {
 
-            Integer value = (Integer) sizeSpinner.getValue();
-            int index = ((DefaultListModel<Integer>) sizeList.getModel()).indexOf(value);
-            if (index > -1) {
-                sizeList.setSelectedValue(value, true);
-            } else {
-                sizeList.clearSelection();
+                Integer value = (Integer) sizeSpinner.getValue();
+                int index = ((DefaultListModel<Integer>) sizeList.getModel()).indexOf(value);
+                if (index > -1) {
+                    sizeList.setSelectedValue(value, true);
+                } else {
+                    sizeList.clearSelection();
+                }
+
             }
-
         });
     }
 
     private void initSizeList() {
         sizeList.setModel(sizeListModel);
         sizeList.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        sizeList.addListSelectionListener(event -> {
-            if (!event.getValueIsAdjusting()) {
-                int index = ((DefaultListModel<Integer>) sizeList.getModel()).indexOf(sizeList.getSelectedValue());
-                if (index > -1) {
-                    sizeSpinner.setValue(sizeList.getSelectedValue());
+        sizeList.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent event) {
+                if (!event.getValueIsAdjusting()) {
+                    int index = ((DefaultListModel<Integer>) sizeList.getModel()).indexOf(sizeList.getSelectedValue());
+                    if (index > -1) {
+                        sizeSpinner.setValue(sizeList.getSelectedValue());
+                    }
                 }
             }
         });

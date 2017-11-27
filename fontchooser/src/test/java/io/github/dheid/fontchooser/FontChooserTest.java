@@ -79,10 +79,10 @@ public class FontChooserTest {
 
         PropertyChangeEvent event = propertyChangeEventArgumentCaptor.getValue();
         assertThat(event.getPropertyName(), is("selectionModel"));
-        assertThat(event.getNewValue(), is(model));
+        assertThat(event.getNewValue(), is((Object)model));
         assertThat(event.getOldValue(), instanceOf(DefaultFontSelectionModel.class));
         assertThat(event.getPropagationId(), is(nullValue()));
-        assertThat(event.getSource(), is(fontChooser));
+        assertThat(event.getSource(), is((Object)fontChooser));
 
     }
 

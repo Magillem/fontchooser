@@ -1,10 +1,5 @@
 package io.github.dheid.fontchooser.model;
 
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import java.awt.Font;
-
-import io.github.dheid.fontchooser.model.DefaultFontSelectionModel;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -13,9 +8,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static org.hamcrest.Matchers.emptyArray;
-import static org.hamcrest.Matchers.hasItemInArray;
-import static org.hamcrest.Matchers.is;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.*;
+
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -77,7 +74,7 @@ public class DefaultFontSelectionModelTest {
 
 		verify(changeListener).stateChanged(changeEventArgumentCaptor.capture());
 		ChangeEvent changeEvent = changeEventArgumentCaptor.getValue();
-		assertThat(changeEvent.getSource(), is(defaultFontSelectionModel));
+		assertThat(changeEvent.getSource(), is((Object)defaultFontSelectionModel));
 	}
 
 }

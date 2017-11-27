@@ -34,6 +34,8 @@ import java.awt.Font;
 import java.awt.Frame;
 import java.awt.GraphicsConfiguration;
 import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ResourceBundle;
@@ -146,7 +148,12 @@ public class FontDialog extends JDialog {
         initComponents();
         getRootPane().setDefaultButton(okButton);
 
-        cancelButton.addActionListener(event -> cancelSelected = true);
+        cancelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                cancelSelected = true;
+            }
+        });
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -170,16 +177,22 @@ public class FontDialog extends JDialog {
 
         okButton.setMnemonic(ResourceBundleUtil.getFirstChar(bundle, "action.ok.mnemonic"));
         okButton.setText(bundle.getString("action.ok"));
-        okButton.addActionListener(event -> {
-            dispose();
+        okButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                FontDialog.this.dispose();
+            }
         });
         controlPanel.add(okButton);
 
         cancelButton.setMnemonic(ResourceBundleUtil.getFirstChar(bundle, "action.cancel.mnemonic"));
         cancelButton.setText(bundle.getString("action.cancel"));
-        cancelButton.addActionListener(event -> {
-            cancelSelected = true;
-            dispose();
+        cancelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                cancelSelected = true;
+                FontDialog.this.dispose();
+            }
         });
         controlPanel.add(cancelButton);
 
